@@ -29,7 +29,7 @@ public class Blink : Habilidades {
 
         if (moving)
         {
-            ParticleGameObject.SetActive(true);
+            //ParticleGameObject.SetActive(true);
             NoseGameObject.SetActive(false);
             m_meshRenderer.enabled = false;
             m_boxCollider.enabled = false;
@@ -39,7 +39,7 @@ public class Blink : Habilidades {
         else
         {
             NoseGameObject.SetActive(true);
-            ParticleGameObject.SetActive(false);
+            //ParticleGameObject.SetActive(false);
             m_meshRenderer.enabled = true;
             m_boxCollider.enabled = true;
         }

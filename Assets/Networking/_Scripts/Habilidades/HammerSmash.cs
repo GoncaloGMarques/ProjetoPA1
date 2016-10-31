@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class HammerSmash : Habilidades {
-
-    [Range(0, 10)]
-    public float radius = 3.0f;
+public class HammerSmash : Habilidades
+{
+    public float radius;
     public float delay = 0.0f;
     //public GameObject shower;
     private GameObject cyl;
@@ -12,12 +11,23 @@ public class HammerSmash : Habilidades {
     public override void Use()
     {
         base.Use();
-        cyl = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
-        cyl.transform.position = hitPos;
-        cyl.transform.localScale = new Vector3(radius, 0.02f, radius);
-        cyl.GetComponent<Renderer>().material.color = Color.magenta;
-        cyl.GetComponent<CapsuleCollider>().isTrigger = true;
-        Invoke("Land", delay);
+        if (inRange)
+        {
+            cyl = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+            cyl.transform.position = hitPos;
+
+            cyl.GetComponent<CapsuleCollider>().radius = radius;
+            Vector3 cSize = cyl.GetComponent<CapsuleCollider>().bounds.size;
+            cyl.transform.localScale = new Vector3(cSize.x, 0.01f, cSize.z);
+
+            cyl.GetComponent<Renderer>().material.color = Color.magenta;
+            cyl.GetComponent<CapsuleCollider>().isTrigger = true;
+            Invoke("Land", delay);
+            ready = false;
+            inRange = false;
+        }
+
+
 
     }
 

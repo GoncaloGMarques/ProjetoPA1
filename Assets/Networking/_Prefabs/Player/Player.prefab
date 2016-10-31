@@ -57,23 +57,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &1000013867188214
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 4000013108232108}
-  - 33: {fileID: 33000014088211126}
-  - 23: {fileID: 23000012177640680}
-  m_Layer: 0
-  m_Name: Plane
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!4 &4000010559622348
 Transform:
   m_ObjectHideFlags: 1
@@ -81,27 +64,13 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000013548474794}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.97, y: 1.256, z: 8.09}
+  m_LocalPosition: {x: 4.286411, y: -3.635015e-10, z: -0.003049272}
   m_LocalScale: {x: 1, y: 2, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 4000013766920710}
-  - {fileID: 4000013108232108}
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!4 &4000013108232108
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000013867188214}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.44, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_Children: []
-  m_Father: {fileID: 4000010559622348}
-  m_RootOrder: 1
 --- !u!4 &4000013766920710
 Transform:
   m_ObjectHideFlags: 1
@@ -129,35 +98,6 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_Materials:
   - {fileID: 2100000, guid: c401c688785c49b40aee059b47feccff, type: 2}
-  m_SubsetIndices: 
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_PreserveUVs: 1
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_SelectedWireframeHidden: 0
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
---- !u!23 &23000012177640680
-MeshRenderer:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000013867188214}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_Materials:
-  - {fileID: 2100000, guid: ad0cc638b5b710746823b579cef46314, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
@@ -216,13 +156,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000013548474794}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!33 &33000014088211126
-MeshFilter:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000013867188214}
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!54 &54000011074587052
 Rigidbody:
   m_ObjectHideFlags: 1
@@ -278,6 +211,7 @@ MonoBehaviour:
   lookHeight: 1
   attackTimer: 0
   isAttacking: 0
+  camera: {fileID: 1000010897129558, guid: 47f0a6e2c6729914cbe2d1569f8a26cd, type: 2}
 --- !u!114 &114000011063213454
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -293,10 +227,13 @@ MonoBehaviour:
   cooldown: 5
   ready: 1
   damage: 10
-  range: 200
+  range: 6
   hitPos: {x: 0, y: 0, z: 0}
   inRange: 0
-  quickCast: 1
+  quickCast: 0
+  preClick: 0
+  cilo: {fileID: 0}
+  radiusTexture: {fileID: 2800000, guid: 509e27e9bc4333744a1e874623694c52, type: 3}
   projectile: {fileID: 125238, guid: a17ff1a05c6c2674f85fed22190e0d26, type: 2}
 --- !u!114 &114000011335602900
 MonoBehaviour:
@@ -317,6 +254,9 @@ MonoBehaviour:
   hitPos: {x: 0, y: 0, z: 0}
   inRange: 0
   quickCast: 1
+  preClick: 0
+  cilo: {fileID: 0}
+  radiusTexture: {fileID: 0}
   projectile: {fileID: 143722, guid: 7d58a1cfd88c0784f811a98c1bdcb9b8, type: 2}
 --- !u!114 &114000011381871474
 MonoBehaviour:
@@ -357,6 +297,9 @@ MonoBehaviour:
   hitPos: {x: 0, y: 0, z: 0}
   inRange: 0
   quickCast: 1
+  preClick: 0
+  cilo: {fileID: 0}
+  radiusTexture: {fileID: 0}
   radius: 3
   delay: 1.5
 --- !u!114 &114000012289050520
@@ -374,10 +317,13 @@ MonoBehaviour:
   cooldown: 2
   ready: 1
   damage: 1
-  range: 10
+  range: 50
   hitPos: {x: 0, y: 0, z: 0}
   inRange: 0
-  quickCast: 0
+  quickCast: 1
+  preClick: 0
+  cilo: {fileID: 0}
+  radiusTexture: {fileID: 0}
   velo: 0.5
   moving: 0
 --- !u!114 &114000012938250882
@@ -399,6 +345,9 @@ MonoBehaviour:
   hitPos: {x: 0, y: 0, z: 0}
   inRange: 0
   quickCast: 1
+  preClick: 0
+  cilo: {fileID: 0}
+  radiusTexture: {fileID: 0}
   speedDuration: 4
 --- !u!114 &114000013861813202
 MonoBehaviour:

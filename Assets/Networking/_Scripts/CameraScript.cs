@@ -1,31 +1,32 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.Networking;
 
-public class CameraScript : MonoBehaviour {
+public class CameraScript : NetworkBehaviour {
     public float cameraHeight, cameraDistance;
     public GameObject player;
     public Texture2D[] cursors;
 
 
 	void Update () {
-	    if (player)
+	    if (player != null && player)
 	    {
 	        Vector3 pPos = player.transform.position;
 	        transform.position = new Vector3(pPos.x, pPos.y + cameraHeight, pPos.z - cameraDistance);
 	        transform.LookAt(player.transform.position);
-	        ChangeCursor();
+	        //ChangeCursor();
 	    }
-	    else
-	    {
-	        GameObject tmpPlayer;
+        //else
+        //{
+        //    GameObject tmpPlayer;
             
-	        tmpPlayer = GameObject.FindGameObjectWithTag("Player");
+        //    tmpPlayer = GameObject.FindGameObjectWithTag("Player");
 
-	        if (tmpPlayer.GetComponent<Movement>().isLocalPlayer)
-	        {
-	            player = tmpPlayer;
-	        }
-	    }
+        //    if (tmpPlayer != null && tmpPlayer.GetComponent<Movement>().isLocalPlayer)
+        //    {
+        //        player = tmpPlayer;
+        //    }
+        //}
 
         
 	}

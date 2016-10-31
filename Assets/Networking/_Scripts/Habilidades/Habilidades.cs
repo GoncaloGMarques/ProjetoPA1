@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Habilidades : MonoBehaviour {
+public class Habilidades : MonoBehaviour
+{
 
     LayerMask floor;
     float maxDistance = 300.0f;
@@ -15,17 +16,56 @@ public class Habilidades : MonoBehaviour {
     public Vector3 hitPos;
     public bool inRange = false;
     public bool quickCast = true;
-    private bool preClick = false;
-    private Transform rangeObj;
+    public bool preClick = false;
+    private GameObject circRadius;
+    public GameObject cilo;
+    public Texture radiusTexture;
 
-	void Start () {
+    void Start()
+    {
         floor = LayerMask.GetMask("Floor");
-        rangeObj = transform.FindChild("Radius");
-	}
+    }
 
-	void Update () {
+    void Update()
+    {
         UpdateTimers();
-	}
+    }
+
+    void ToggleRadius()
+    {
+        if (!circRadius)
+        {
+            circRadius = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+            circRadius.transform.position = transform.position - new Vector3(0.0f, 1.0f, 0.0f);
+            circRadius.transform.SetParent(this.transform);
+
+            circRadius.GetComponent<CapsuleCollider>().radius = range;
+            Vector3 cSize = circRadius.GetComponent<CapsuleCollider>().bounds.size;
+            circRadius.transform.localScale = new Vector3(cSize.x, 0.01f, cSize.z);
+
+
+            circRadius.GetComponent<Renderer>().material.color = Color.magenta;
+            circRadius.GetComponent<CapsuleCollider>().isTrigger = true;
+            circRadius.GetComponent<Renderer>().material.mainTexture = radiusTexture;
+            circRadius.GetComponent<Renderer>().material.shader = Shader.Find("Sprites/Default");
+        }
+        else Destroy(circRadius);
+
+
+    }
+
+    //void SwitchRadius()
+    //{
+    //    GameObject isto = GameObject.Instantiate(cilo);
+    //    isto.transform.position = transform.position - new Vector3(0.0f, 1.0f, 0.0f);
+
+    //    isto.GetComponent<CapsuleCollider>().radius = range;
+    //    Vector3 cSize = isto.GetComponent<CapsuleCollider>().bounds.size;
+    //    isto.transform.localScale = new Vector3(cSize.x, 0.01f, cSize.z);
+
+    //    isto.GetComponent<Renderer>().material.color = Color.magenta;
+    //    isto.GetComponent<CapsuleCollider>().isTrigger = true;
+    //}
 
     public virtual void UpdateTimers()
     {
@@ -56,32 +96,38 @@ public class Habilidades : MonoBehaviour {
                 }
                 else inRange = false;
             }
-            
+
         }
     }
 
     public virtual void Use()
     {
+        DeactivateAll();
         if (!quickCast)
         {
+            ToggleRadius();
+
+            //SwitchRadius();
             if (preClick)
             {
                 VerifyRange();
                 if (inRange)
                 {
-                    GetComponent<Movement>().LookToMouse();
-                    GetComponent<Movement>().StopToAttack(duration);
                     ready = false;
                     timer = 0;
-                    
+                    GetComponent<Movement>().LookToMouse();
+                    GetComponent<Movement>().StopToAttack(duration);
+
+
                 }
                 preClick = false;
             }
-            else preClick = true;
+            else if (ready) preClick = true;
         }
         else
         {
             VerifyRange();
+
             if (inRange)
             {
                 GetComponent<Movement>().LookToMouse();
@@ -90,13 +136,21 @@ public class Habilidades : MonoBehaviour {
                 timer = 0;
             }
         }
-
-
     }
 
-    void ShowRange()
+    public virtual void DeactivateAll()
     {
-//rangeObj.GetComponent<Renderer>().
+        Habilidades[] abs = GetComponents<Habilidades>();
+        foreach (Habilidades a in abs)
+        {
+            if (a != this)
+            {
+                a.ready = false;
+                a.preClick = false;
+                if (a.circRadius) a.ToggleRadius();
+            }
+        }
     }
+
 
 }

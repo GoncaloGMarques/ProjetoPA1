@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Shoot : Habilidades {
+public class Shoot : Habilidades
+{
     public GameObject projectile;
     public override void Use()
     {
@@ -14,6 +15,8 @@ public class Shoot : Habilidades {
                 proj.transform.position = transform.position;
                 proj.transform.LookAt(new Vector3(hitPos.x, transform.position.y, hitPos.z));
                 Destroy(proj, 3.0f);
+                ready = false;
+                inRange = false;
             }
         }
     }

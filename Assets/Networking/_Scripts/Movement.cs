@@ -7,13 +7,15 @@ using UnityEngine.Networking;
 public class Movement : NetworkBehaviour {
     
     public float speed;
-    public Camera cam;
+    //public Camera cam;
     LayerMask floor;
     float maxDistance = 300.0f;
     public float lookHeight = 0.0f;
     float horizontal, vertical;
     public float attackTimer = 0.0f;
     public bool isAttacking = false;
+    public GameObject camera;
+    public GameObject cam;
     private Hero hero;
   
 
@@ -21,17 +23,31 @@ public class Movement : NetworkBehaviour {
         floor = LayerMask.GetMask("Floor");
         speed = GetComponent<Hero>().moveSpeed;
         hero = GetComponent<Hero>();
+        SpawnCamera();
 	}
+
+    private void SpawnCamera()
+    {
+        //GameObject.FindGameObjectWithTag("SceneCamera").SetActive(false);
+        GameObject[] cams = GameObject.FindGameObjectsWithTag("MainCamera");
+        foreach (GameObject c in cams)
+        {
+            c.SetActive(false);
+        }
+        cam = GameObject.Instantiate(camera);
+        cam.transform.position = Vector3.zero;
+        cam.GetComponent<CameraScript>().player = gameObject;
+        cam.tag = "MainCamera";
+        cam.SetActive(true);
+    }
 
     public override void OnStartLocalPlayer()
     {
-        GetComponent<Renderer>().material.color = Color.black;
+        GetComponent<Renderer>().material.color = Color.blue;
     }
 
     void Update ()
 	{
-        
-
 	    if (!isLocalPlayer)
 	    {
             
@@ -72,9 +88,10 @@ public class Movement : NetworkBehaviour {
 
     public void LookToMouse()
     {
+        
         Vector3 lookTarget = Vector3.zero;
         RaycastHit hit;
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Ray ray = cam.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out  hit, maxDistance, floor))
         {
             lookTarget = hit.point;
